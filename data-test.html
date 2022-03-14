@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var myRequest = new XMLHttpRequest();
+        var url = "./data/gamereviews2022.json";
+
+        // Called whenever the readyState attribute changes 
+        myRequest.onreadystatechange = function() {
+        // Check if fetch request is done
+        if (myRequest.readyState == 4 && myRequest.status == 200) { 
+            // Parse the JSON string
+            var jsonData = JSON.parse(myRequest.responseText);        
+            // Call the showArtists(), passing in the parsed JSON string
+            processReviews(jsonData);
+
+        }
+        };
+
+        // Do the HTTP call using the url variable we specified above
+        myRequest.open("GET", url, true);
+        myRequest.send();
+
+        // Function that formats the string with HTML tags, then outputs the result
+        function processReviews(mydata) {
+            console.log(mydata);
+
+            var output = "<ul>"; // Open list
+            var i;
+            for (var i in mydata) {
+                output += "<li><a href='./full.html?id=" + mydata[i].id + "'>" + mydata[i].id + "</a> </li>"; 
+                }
+    
+                output += "</ul>"; // Close list
+
+    // Output the data to the "artistlist" element
+    document.getElementById("gameList").innerHTML = output;
+    console.log(output);
+}
+            // Add lots more code here!!!
+        
+</script>
+
+<!-- The output appears here -->
+<div id="gameList"></div>
+
+
+    </script>
+    
+</body>
+</html>
